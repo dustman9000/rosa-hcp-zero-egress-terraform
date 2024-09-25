@@ -195,7 +195,12 @@ variable "cluster_name" {
   }
 }
 
-output "cluster-subnets-string" {
+output "vpc_id" {
+  value       = rmodule.vpc.id
+  description = "VPC ID"
+}
+
+output "private_subnet_ids" {
   value       = jsonencode(rmodule.vpc.private_subnets)
   description = "Comma-separated string of all subnet IDs created for this cluster."
 }
