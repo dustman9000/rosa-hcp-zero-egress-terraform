@@ -12,7 +12,7 @@ This repository contains Terraform configurations to set up an AWS Virtual Priva
 
 Before you begin, ensure that you have the following:
 
-- [Terraform](https://www.terraform.io/downloads.html) installed
+- [Terraform](https://www.terraform.io/downloads.html) 1.8.5 or later installed
 - AWS CLI configured with proper permissions to manage VPC, subnets, and other resources
 - A ROSA account with permissions to deploy ROSA HCP clusters
 
