@@ -62,7 +62,7 @@ resource "aws_security_group" "authorize_inbound_vpc_traffic" {
 
 # https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html
 resource "aws_vpc_endpoint" "sts" {
-  service_name      = "com.amazonaws.${data.aws_region.current}.sts"
+  service_name      = "com.amazonaws.${var.region}.sts"
   vpc_id            = module.vpc.vpc_id
   vpc_endpoint_type = "Interface"
 
@@ -78,7 +78,7 @@ resource "aws_vpc_endpoint" "sts" {
 }
 
 resource "aws_vpc_endpoint" "ecr_api" {
-  service_name      = "com.amazonaws.${data.aws_region.current}.ecr.api"
+  service_name      = "com.amazonaws.${var.region}.ecr.api"
   vpc_id            = module.vpc.vpc_id
   vpc_endpoint_type = "Interface"
 
@@ -95,7 +95,7 @@ resource "aws_vpc_endpoint" "ecr_api" {
 
 # https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html
 resource "aws_vpc_endpoint" "ecr_dkr" {
-  service_name      = "com.amazonaws.${data.aws_region.current}.ecr.dkr"
+  service_name      = "com.amazonaws.${var.region}.ecr.dkr"
   vpc_id            = module.vpc.vpc_id
   vpc_endpoint_type = "Interface"
 
@@ -112,7 +112,7 @@ resource "aws_vpc_endpoint" "ecr_dkr" {
 
 # https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-s3.html
 resource "aws_vpc_endpoint" "s3" {
-  service_name      = "com.amazonaws.${data.aws_region.current}.s3"
+  service_name      = "com.amazonaws.${var.region}.s3"
   vpc_id            = module.vpc.vpc_id
   vpc_endpoint_type = "Gateway"
 
@@ -160,11 +160,11 @@ variable "cluster_name" {
 }
 
 output "vpc_id" {
-  value       = rmodule.vpc.id
+  value       = module.vpc.vpc_id
   description = "VPC ID"
 }
 
 output "private_subnet_ids" {
-  value       = jsonencode(rmodule.vpc.private_subnets)
+  value       = jsonencode(module.vpc.private_subnets)
   description = "Comma-separated string of all subnet IDs created for this cluster."
 }
