@@ -58,44 +58,8 @@ resource "aws_security_group" "authorize_inbound_vpc_traffic" {
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
-
-}
-#
-# https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html
-resource "aws_vpc_endpoint" "ec2" {
-  service_name      = "com.amazonaws.${data.aws_region.current}.ec2"
-  vpc_id            = module.vpc.vpc_id
-  vpc_endpoint_type = "Interface"
-
-  private_dns_enabled = true
-  subnet_ids          = module.vpc.private_subnets
-  security_group_ids  = [aws_security_group.authorize_inbound_vpc_traffic.id]
-
-  tags = {
-    Terraform    = "true"
-    service      = "ROSA"
-    cluster_name = var.cluster_name
-  }
 }
 
-# https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html
-# https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html
-resource "aws_vpc_endpoint" "kms" {
-  service_name      = "com.amazonaws.${data.aws_region.current}.kms"
-  vpc_id            = module.vpc.vpc_id
-  vpc_endpoint_type = "Interface"
-
-  private_dns_enabled = true
-  subnet_ids          = module.vpc.private_subnets
-  security_group_ids  = [aws_security_group.authorize_inbound_vpc_traffic.id]
-
-  tags = {
-    Terraform    = "true"
-    service      = "ROSA"
-    cluster_name = var.cluster_name
-  }
-}
-# https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html
 # https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html
 resource "aws_vpc_endpoint" "sts" {
   service_name      = "com.amazonaws.${data.aws_region.current}.sts"
